@@ -38,6 +38,11 @@ public class Main {
 
         System.out.println("Prueba desde PHL a RDU evitando BOS:");
         flightHelper.printShortestFlight("PHL", "RDU", "BOS");
+
+        System.out.println();
+
+        System.out.println("Prueba desde PVD a ORD:");
+        flightHelper.printShortestFlight("PVD", "ORD");
     }
 
 }

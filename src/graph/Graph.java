@@ -210,8 +210,9 @@ public class Graph<A, V> {
      * Implementación del algoritmo de Dijkstra para hallar el camino más corto entre dos vértices.
      * @param start vértice inicial
      * @param avoid vértice a evitar
+     * @throws NegativeWeightException
      */
-    private void dijkstra(String start, String avoid)  {
+    private void dijkstra(String start, String avoid) throws NegativeWeightException  {
         PriorityQueue<Path> pq = new PriorityQueue<>();
 
         Vertex startVertex = getVertex(start);
@@ -272,7 +273,7 @@ public class Graph<A, V> {
         for (Vertex v : vertexMap.values()) {
             v.from = null;
             v.path = null;
-            v.weight = Double.MAX_VALUE;
+            v.weight = Double.POSITIVE_INFINITY;
             v.visited = false;
         }
     }
