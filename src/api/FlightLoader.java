@@ -5,12 +5,19 @@ import graph.Graph;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Esta clase se encarga de cargar los archivos en un grafo para poder obtener los vuelos
  * más cortos de una manera eficiente.
  *
  * @author Mariano Córdoba
+ * @author Matías Rodriguez
  */
 public class FlightLoader {
 
@@ -84,12 +91,15 @@ public class FlightLoader {
         if (depAPM == 'A' && depTime > 1200)
             depTime -= 1200;
 
+        depTime = toMinutes(depTime);
+        arrTime = toMinutes(arrTime);
+
         // Se calcula la diferencia entre los husos horarios.
-        int adj = Math.abs(depAdj) - Math.abs(arrAdj);
+        int adj = toMinutes(Math.abs(depAdj) - Math.abs(arrAdj));
 
         int duration;
         if (depAPM == 'P' && arrAPM == 'A')
-            duration = 2400 + arrTime - depTime - adj;
+            duration = 1440 + arrTime - depTime - adj;
         else
             duration = arrTime - depTime - adj;
 
@@ -99,7 +109,16 @@ public class FlightLoader {
         Se realizan los cálculos necesarios para que el resultado sea la duración
         en minutos con base sexagesimal.
          */
-        return (int) ((duration - (duration % 100)) * 0.6) + (duration % 100);
+        return duration;
+    }
+
+    /**
+     * Convierte un horario en formato HHmm en minutos desde las 00:00 hs.
+     * @param time
+     * @return el tiempo en minutos
+     */
+    private static int toMinutes(int time) {
+        return (int) ((time - (time % 100)) * 0.6) + (time % 100);
     }
 
 }

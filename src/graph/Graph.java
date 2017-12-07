@@ -10,6 +10,7 @@ import java.util.*;
  * @param <V>
  *
  * @author Mariano Córdoba
+ * @author Matías Rodriguez
  */
 public class Graph<A, V> {
 
